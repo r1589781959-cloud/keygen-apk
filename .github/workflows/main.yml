@@ -1,0 +1,32 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ main ] # 当代码更新时自动打包
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 安装 Python 环境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 安装 Flet 框架
+        run: pip install flet
+
+      - name: 配置 Flutter 与 Android SDK (核心魔法)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: 开始云端炼丹打包 APK !
+        run: flet build apk --project-name "藤原印钞机" --org "com.fujiwara.keygen" KeyGen_android.py
+
+      - name: 输出并保存 APK 炸弹
+        uses: actions/upload-artifact@v3
+        with:
+          name: Fujiwara-KeyGen-Android
+          path: build/apk/**/*.apk
