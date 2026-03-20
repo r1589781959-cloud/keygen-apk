@@ -26,7 +26,7 @@ jobs:
         run: flet build apk --project-name "藤原印钞机" --org "com.fujiwara.keygen" KeyGen_android.py
 
       - name: 输出并保存 APK 炸弹
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Fujiwara-KeyGen-Android
-          path: build/apk/**/*.apk
+          name: apk
+          path: app/build/outputs/apk/
